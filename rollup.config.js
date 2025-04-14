@@ -15,15 +15,11 @@ import json from '@rollup/plugin-json';
 export default defineConfig({
   input: {
     main: 'src/main.ts',
-    login: 'src/pages/login/Login.tsx',
-    tab: 'src/components/tab/Tab.tsx',
+    tabs: 'src/components/tabs/Tabs.tsx',
     modal: 'src/components/modal/Modal.tsx',
     layer: 'src/components/layer/Layer.tsx',
     button: 'src/components/button/Button.tsx',
-    drawer: 'src/components/drawer/Drawer.tsx',
-    pageTitle: 'src/components/pageTitle/PageTitle.tsx',
-    table: 'src/components/table/UniTable.tsx',
-    uploadFile: 'src/components/uploadFile/UploadFile.tsx'
+    drawer: 'src/components/drawer/Drawer.tsx'
   },
   output: [
     {
