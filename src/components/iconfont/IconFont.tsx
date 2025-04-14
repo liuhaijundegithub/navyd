@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
+import { CommonHTMLAttributes } from '../../types/global';
 
-type IconFontProps = Partial<Omit<React.HTMLAttributes<HTMLElement>, 'type'>> & {
+type IconFontProps = Partial<Omit<CommonHTMLAttributes, 'type'>> & {
   type: string;
   className?: string;
   spin?: boolean;

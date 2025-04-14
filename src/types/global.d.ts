@@ -1,4 +1,1 @@
-declare module '*.png' {
-  const value: string;
-  export default value;
-}
+export type CommonHTMLAttributes = Omit<React.HTMLAttributes<HTMLElement>>;

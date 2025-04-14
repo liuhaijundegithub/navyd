@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import ReactDom from 'react-dom';
 import { ModalProps } from '../../types/ModalProps';
 import Button from '../button/Button';
+import { CommonHTMLAttributes } from '../../types/global';
 
 
-const Modal: React.FC<ModalProps> = function (props) {
+const Modal: React.FC<ModalProps & CommonHTMLAttributes> = function (props) {
   const {
     title = '标题',
     open,
@@ -49,7 +50,7 @@ const Modal: React.FC<ModalProps> = function (props) {
   };
 
   const El = (
-    <div className={`uni-shadow-mask ${mask ? 'mask' : ''}`}  ref={shadow}>
+    <div className={`uni-shadow-mask ${mask ? 'mask' : ''}`} ref={shadow}>
       <div
         className="uni-modal"
         style={{ width: `${width}px` }}

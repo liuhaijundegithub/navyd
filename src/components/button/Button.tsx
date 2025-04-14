@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import IconFont from '../iconfont/IconFont';
 import { ButtonProps } from '../../types/ButtonProps';
+import { CommonHTMLAttributes } from '../../types/global';
 
-const Button: React.FC<Partial<ButtonProps>> = props => {
+const Button: React.FC<Partial<ButtonProps & Omit<CommonHTMLAttributes, 'type'>>> = props => {
   const {
     className,
     disabled,

@@ -2,8 +2,9 @@ import React, {useEffect, useRef} from 'react';
 import {DrawerProps} from '../../types/DrawerProps';
 import ReactDom from 'react-dom';
 import Button from '../button/Button';
+import { CommonHTMLAttributes } from '../../types/global';
 
-const Drawer: React.FC<DrawerProps> = function (props) {
+const Drawer: React.FC<DrawerProps & CommonHTMLAttributes> = function (props) {
   const {
     title,
     open,
