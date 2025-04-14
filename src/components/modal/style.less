@@ -1,0 +1,124 @@
+.uni-modal {
+  position: fixed;
+  z-index: 1000;
+  border-radius: @border-radius;
+  background: #fff;
+  width: 320px;
+  animation: fadeIn 0.2s ease-in-out;
+  display: none;
+  //margin-top: -100px;
+  &-show {
+    display: block!important;
+  }
+  &-hide {
+    animation: fadeOut 0.2s ease-in-out;
+  }
+  .uni-modal-header {
+    height: 55px;
+    padding: 17px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: @border;
+    .close {
+      cursor: pointer;
+      span[role] {
+        color: #8C8C8C;
+      }
+    }
+  }
+  .uni-modal-content {
+    padding: 24px;
+  }
+  .uni-modal-footer {
+    height: 68px;
+    padding: 17px 24px;
+    border-top: @border;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      margin-left: 20px;
+    }
+  }
+}
+
+
+// 静态方法调用的modal样式
+.uni-modal-alert {
+  border-radius: @border-radius;
+  background: #fff;
+  padding: 20px 24px;
+  width: 414px;
+  margin-top: -100px;
+  animation: fadeIn 0.2s ease-in-out;
+  &-hide {
+    animation: fadeOut 0.2s ease-in-out;
+  }
+  &-container {
+    display: flex;
+    align-items: flex-start;
+    .icon {
+      font-size: 22px;
+      margin-right: 10px;
+      color: #faad14;
+    }
+    .uni-alert-right {
+      flex: 1;
+      &-title {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        > span {
+          // color: var(--font-color);
+          font-size: 16px;
+          &[role] {
+            cursor: pointer;
+            color: #8C8C8C;
+            font-size: 14px;
+          }
+        }
+      }
+      &-content {
+        margin-top: 14px;
+        font-size: 14px;
+        // color: var(--font-color);
+      }
+    }
+  }
+  &-btn {
+    height: 50px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    button {
+      margin-left: 10px;
+      &.ant-btn-primary {
+        background-color: @main-color;
+      }
+    }
+  }
+}
+
+.uni-shadow-mask {
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  animation: fadeShow .2s linear both;
+
+  &.show {
+    display: flex!important;
+  }
+  &.hide {
+    animation: fadeHide .2s linear both;
+  }
+
+  &.mask {
+    background: rgba(0, 0, 0, .5);
+  }
+}

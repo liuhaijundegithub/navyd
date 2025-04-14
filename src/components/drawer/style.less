@@ -1,0 +1,45 @@
+.uni-drawer {
+  position: fixed;
+  right: -320px;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  z-index: 1000;
+  background: #fff;
+  display: none;
+  animation: move-left .2s linear;
+  &-show {
+    right: 0;
+    display: block!important;
+  }
+  &-hide {
+    animation: move-right 0.2s linear;
+  }
+  .uni-drawer-header {
+    height: 60px;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: @border;
+    .close {
+      cursor: pointer;
+      color: #8C8C8C;
+    }
+  }
+  .uni-drawer-content {
+    padding: 16px;
+    overflow-y: scroll;
+  }
+  .uni-drawer-footer {
+    height: 60px;
+    padding: 16px 24px;
+    border-top: @border;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    button {
+      margin-left: 20px;
+    }
+  }
+}

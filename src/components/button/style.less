@@ -1,0 +1,164 @@
+
+// 按钮
+// 按钮基本属性
+@btn-font-weight:             400;
+@btn-padding-y:               .5rem;
+@btn-padding-x:               1.25rem;
+@btn-font-size:               @font-size-base;
+
+//不同大小按钮的 padding 和 font size
+@btn-padding-y-sm:            .375rem;
+@btn-padding-x-sm:            .5rem;
+@btn-font-size-sm:            @font-size-sm;
+
+@btn-padding-y-lg:            .625rem;
+@btn-padding-x-lg:            1.5625rem;
+@btn-font-size-lg:            @font-size-lg;
+
+
+// 按钮其他
+@btn-box-shadow:              inset 0 0 0 rgba(255, 255, 255, .15), 1px 2px 1px rgba(0, 0, 0, .075);
+@btn-disabled-opacity:        .3;
+
+
+// 按钮 radius
+@btn-border-radius:           @border-radius;
+
+@btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+@body-bg: #fff;
+
+.btn-type(
+  @bg-color;
+  @color;
+  @border-color;
+) {
+  background-color: @bg-color;
+  color: @color;
+  border: 1px solid @border-color;
+  &:hover {
+    background-color: lighten(@bg-color, 7.5%);
+    color: lighten(@color, 7.5%);
+  }
+  &:active {
+    background-color: darken(@bg-color, 7.5%);
+    color: darken(@color, 10%);
+  }
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: @btn-disabled-opacity;
+    > * {
+      pointer-events: none;
+    }
+    &:hover {
+      color: @color;
+      background-color: @bg-color;
+    }
+  }
+}
+
+.btn-size (@font-size; @padding-y; @padding-x) {
+  font-size: @font-size;
+  padding: @padding-y @padding-x;
+  .uni-iconfont {
+    font-size: @font-size;
+    margin-right: @padding-y;
+  }
+}
+
+.uni-btn {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  box-shadow: @btn-box-shadow;
+  background-color: @body-bg;
+  outline: none;
+  border: none;
+  padding: @btn-padding-y @btn-padding-x;
+  cursor: pointer;
+  border-radius: @btn-border-radius;
+  transition: @btn-transition;
+  border: 1px solid transparent;
+  color: @font-color;
+  &-type-primary {
+    background-color: @main-color;
+    border: 1px solid @main-color;
+    color: @body-bg;
+    &:hover {
+      background-color: @main-lighter-color;
+    }
+    &:active {
+      background-color: @main-darker-color;
+    }
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: @btn-disabled-opacity;
+      > * {
+        pointer-events: none;
+      }
+      &:hover {
+        background-color: @main-color;
+      }
+    }
+  }
+  &-type-danger {
+    .btn-type(@danger, @body-bg, @danger);
+  }
+  &-type-default {
+    background-color: @body-bg;
+    border: 1px solid @border-color;
+    &:hover {
+      color: @main-color;
+      border-color: @main-color;
+    }
+    &:active {
+      color: @main-darker-color;
+      border-color: @main-darker-color;
+    }
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: @btn-disabled-opacity;
+      > * {
+        pointer-events: none;
+      }
+      &:hover {
+        color: @font-color;
+        border-color: @border-color;
+      }
+    }
+  }
+  &-size-large {
+    .btn-size(@btn-font-size-lg, @btn-padding-y-lg, @btn-padding-x-lg);
+  }
+  &-size-small {
+    .btn-size(@btn-font-size-sm, @btn-padding-y-sm, @btn-padding-x-sm);
+  }
+  &-size-normal {
+    .btn-size(@btn-font-size, @btn-padding-y, @btn-padding-x);
+  }
+  &-size-small {
+    .btn-size(@btn-font-size-sm, @btn-padding-y-sm, @btn-padding-x-sm);
+  }
+  &-type-link {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: @main-color;
+    &:hover {
+      color: @main-lighter-color;
+    }
+    &:active {
+      color: @main-darker-color;
+    }
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: @btn-disabled-opacity;
+      > * {
+        pointer-events: none;
+      }
+    }
+    box-shadow: none;
+  }
+  .btn.loading {
+  }
+}

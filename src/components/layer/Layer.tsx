@@ -1,0 +1,170 @@
+import { message, Spin } from 'antd';
+import { createRoot } from 'react-dom/client';
+import React, { useEffect, useState } from 'react';
+import Button from '../button/Button';
+
+interface ModalProps {
+  title: React.ReactNode;
+  content: React.ReactNode;
+  hideIcon?: boolean;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm?: () => void | Promise<void>;
+  onCancel?: () => void | Promise<void>;
+}
+
+function Modal (props: ModalProps & { onlyConfirmBtn?: boolean }) {
+  let {
+    title,
+    content,
+    confirmText,
+    cancelText,
+    hideIcon = false,
+    onConfirm,
+    onCancel,
+    onlyConfirmBtn // 是不是提示框，如果只是提示框那么只需要一个按钮
+  } = props;
+
+  if (onlyConfirmBtn && !confirmText) {
+    confirmText = '我知道了';
+  }
+
+  const locationChanged = () => {
+    //  页面路径发生了变化，意味着当前页面的所有的提示框都要清除掉
+    const el = document.querySelectorAll('.uni-shadow-mask-alert');
+    el.forEach(i => document.body.removeChild(i));
+  };
+  useEffect(() => {
+    window.addEventListener('popstate', locationChanged);
+    return function () {
+      window.removeEventListener('popstate', locationChanged);
+    };
+  }, []);
+  const [loading, setLoading] = useState(false);
+
+  const destoryModal = () => {
+    const el = document.querySelector('.uni-shadow-mask-alert') as HTMLElement;
+    const modal = el.querySelector('.uni-modal-alert')!;
+    modal.classList.add('uni-modal-alert-hide');
+    el.classList.add('hide');
+    el.onanimationend = function () {
+      document.body.removeChild(el);
+      el.onanimationend = null;
+    };
+  };
+
+  const cancel = async () => {
+    try {
+      setLoading(true);
+      await onCancel?.();
+    } finally {
+      setLoading(false);
+      destoryModal();
+    }
+  };
+
+  const confirm = async () => {
+    setLoading(true);
+    try {
+      await onConfirm?.();
+    } finally {
+      setLoading(false);
+      destoryModal();
+    }
+  };
+
+  return (
+    <div className="uni-modal-alert">
+      <div className="uni-modal-alert-container">
+        {
+          !hideIcon && <span className="iconfont icon icon-tips-alert" />
+        }
+        <div className="uni-alert-right">
+          <div className="uni-alert-right-title">
+            <span>{ title }</span>
+            {
+              hideIcon && <span className="iconfont icon-nav_shut" onClick={cancel} />
+            }
+          </div>
+          <div className="uni-alert-right-content">{ content }</div>
+        </div>
+      </div>
+      <div className="uni-modal-alert-btn">
+        {
+          !onlyConfirmBtn && <Button
+            onClick={cancel}
+          >
+            { cancelText || '取消' }
+          </Button>
+        }
+        <Button
+          type="primary"
+          onClick={confirm}
+          loading={loading}
+        >
+          { confirmText || '确认' }
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export default {
+  error: function (s: string) {
+    return message.error(s);
+  },
+  msg: function (s: string) {
+    return message.success(s);
+  },
+  warn: function (s: string) {
+    return message.warning(s);
+  },
+  info: function (s: string) {
+    return message.info(s);
+  },
+  confirm: function (props: ModalProps) {
+    // if (document.querySelector('.uni-shadow-mask-alert')) return false;
+    const div = document.createElement('div');
+    div.classList.add('uni-shadow-mask');
+    div.classList.add('mask');
+    div.classList.add('uni-shadow-mask-alert');
+    div.classList.add('show');
+    document.body.appendChild(div);
+    const root = createRoot(div);
+    root.render(
+      <Modal {...props} />
+    );
+
+  },
+  alert: function (props: ModalProps) {
+    // if (document.querySelector('.uni-shadow-mask-alert')) return false;
+    const div = document.createElement('div');
+    div.classList.add('uni-shadow-mask');
+    div.classList.add('mask');
+    div.classList.add('uni-shadow-mask-alert');
+    div.classList.add('show');
+    document.body.appendChild(div);
+    const root = createRoot(div);
+    root.render(
+      <Modal
+        {...props}
+        onlyConfirmBtn
+      />
+    );
+  },
+  loading (msg = '加载中···') {
+    const loadingNode = document.querySelectorAll('.uni-loading');
+    if (loadingNode && loadingNode.length > 0) return false;
+    const container = document.createElement('div');
+    container.classList.add('uni-loading');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    root.render(<Spin spinning fullscreen tip={msg} />);
+  },
+  closeLoading () {
+    const loadingNode = document.querySelectorAll('.uni-loading');
+    loadingNode.forEach(i => {
+      document.body.removeChild(i);
+    });
+  }
+};
