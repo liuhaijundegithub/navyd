@@ -6,7 +6,7 @@ yarn add unid
 
 ### 更新日志
 
-> [change log](https://gitee.com/unisolution_cn/components-react/blob/master/CHANGELOG.zh-CN.md)
+> [change log](https://github.com/liuhaijundegithub/unid/blob/master/CHANGELOG.zh-CN.md)
 
 ### 颜色系统
 

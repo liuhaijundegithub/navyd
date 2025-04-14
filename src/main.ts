@@ -16,3 +16,11 @@ export type { ButtonProps } from './types/ButtonProps';
 // drawer
 export { default as Drawer } from './components/drawer/Drawer';
 export type { DrawerProps } from './types/DrawerProps';
+
+// tabs
+export { default as Tabs } from './components/tabs/Tabs';
+export type { TabsProps } from './types/TabsProps';
+
+// configProvider
+export { default as ConfigProvider } from './components/configProvider/ConfigProvider';
+export type { ConfigProviderProps } from './types/ConfigProviderProps';

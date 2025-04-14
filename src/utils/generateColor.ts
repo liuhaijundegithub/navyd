@@ -1,18 +1,8 @@
 /* eslint-disable no-param-reassign */
-const root = document.documentElement;
-const originMainColor = getComputedStyle(root).getPropertyValue('--uni-main-color');
-const observer = new MutationObserver((mutations) => {
-  const newColor = getComputedStyle(root).getPropertyValue('--uni-main-color');
-  (originMainColor !== newColor ) && generateColor();
-});
-observer.observe(document.documentElement, { attributes: true });
 
-const generateColor = () => {
+export default (baseColor: string) => {
   const root = document.documentElement;
 
-  const getCSSVariable = (name: string): string => {
-    return getComputedStyle(root).getPropertyValue(name).trim();
-  };
 
   const setCSSVariable = (name: string, value: string): void => {
     root.style.setProperty(name, value);
@@ -79,7 +69,6 @@ const generateColor = () => {
     return `hsl(${h * 360}, ${s * 100}%, ${newL * 100}%)`;
   };
 
-  const baseColor = getCSSVariable('--uni-main-color');
   const darkerColor = adjustLightness(baseColor, -0.1);
   const lighterColor = adjustLightness(baseColor, 0.1);
   setCSSVariable('--darker-main-color', darkerColor);
