@@ -73,4 +73,5 @@ export default (baseColor: string) => {
   const lighterColor = adjustLightness(baseColor, 0.1);
   setCSSVariable('--darker-main-color', darkerColor);
   setCSSVariable('--lighter-main-color', lighterColor);
+  setCSSVariable('--uni-main-color', baseColor);
 };
