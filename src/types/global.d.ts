@@ -1,1 +1,1 @@
-export type CommonHTMLAttributes = Omit<React.HTMLAttributes<HTMLElement>>;
+export type CommonHTMLAttributes = Partial<React.HTMLAttributes<HTMLDivElement>>
