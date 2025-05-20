@@ -5,7 +5,7 @@ import Button from '../button/Button';
 import { CommonHTMLAttributes } from '../../types/global';
 
 
-const Modal: React.FC<ModalProps & CommonHTMLAttributes> = function (props) {
+const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = function (props) {
   const {
     title = '标题',
     open,

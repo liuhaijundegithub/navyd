@@ -1,7 +1,6 @@
-import { message, Spin } from 'antd';
+import { message, Spin, Button } from 'antd';
 import { createRoot } from 'react-dom/client';
 import React, { useEffect, useState } from 'react';
-import Button from '../button/Button';
 
 interface ModalProps {
   title: React.ReactNode;
@@ -13,7 +12,7 @@ interface ModalProps {
   onCancel?: () => void | Promise<void>;
 }
 
-function Modal (props: ModalProps & { onlyConfirmBtn?: boolean }) {
+function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean }) {
   let {
     title,
     content,
@@ -22,7 +21,8 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean }) {
     hideIcon = false,
     onConfirm,
     onCancel,
-    onlyConfirmBtn // 是不是提示框，如果只是提示框那么只需要一个按钮
+    onlyConfirmBtn, // 是不是提示框，如果只是提示框那么只需要一个按钮
+    danger
   } = props;
 
   if (onlyConfirmBtn && !confirmText) {
@@ -99,6 +99,7 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean }) {
         }
         <Button
           type="primary"
+          danger={danger}
           onClick={confirm}
           loading={loading}
         >
@@ -122,7 +123,7 @@ export default {
   info: function (s: string) {
     return message.info(s);
   },
-  confirm: function (props: ModalProps) {
+  confirm: function (props: ModalProps & { danger?: boolean }) {
     // if (document.querySelector('.uni-shadow-mask-alert')) return false;
     const div = document.createElement('div');
     div.classList.add('uni-shadow-mask');
@@ -132,11 +133,11 @@ export default {
     document.body.appendChild(div);
     const root = createRoot(div);
     root.render(
-      <Modal {...props} />
+      <Modal {...props} danger={props.danger} />
     );
 
   },
-  alert: function (props: ModalProps) {
+  alert: function (props: ModalProps & { danger?: boolean }) {
     // if (document.querySelector('.uni-shadow-mask-alert')) return false;
     const div = document.createElement('div');
     div.classList.add('uni-shadow-mask');
@@ -149,6 +150,7 @@ export default {
       <Modal
         {...props}
         onlyConfirmBtn
+        danger={props.danger}
       />
     );
   },
