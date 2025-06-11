@@ -103,7 +103,7 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean
           onClick={confirm}
           loading={loading}
         >
-          { confirmText || '确认' }
+          { confirmText || '确定' }
         </Button>
       </div>
     </div>
