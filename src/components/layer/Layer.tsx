@@ -67,9 +67,9 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean
     setLoading(true);
     try {
       await onConfirm?.();
+      destoryModal();
     } finally {
       setLoading(false);
-      destoryModal();
     }
   };
 
