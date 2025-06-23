@@ -1,6 +1,7 @@
 import { message, Spin, Button } from 'antd';
 import { createRoot } from 'react-dom/client';
 import React, { useEffect, useState } from 'react';
+import Message from '../message/Message';
 
 interface ModalProps {
   title: React.ReactNode;
@@ -110,63 +111,66 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean
   );
 }
 
-export default {
-  error: function (s: string) {
-    return message.error(s);
-  },
-  msg: function (s: string) {
-    return message.success(s);
-  },
-  warn: function (s: string) {
-    return message.warning(s);
-  },
-  info: function (s: string) {
-    return message.info(s);
-  },
-  confirm: function (props: ModalProps & { danger?: boolean }) {
-    // if (document.querySelector('.uni-shadow-mask-alert')) return false;
-    const div = document.createElement('div');
-    div.classList.add('uni-shadow-mask');
-    div.classList.add('mask');
-    div.classList.add('uni-shadow-mask-alert');
-    div.classList.add('show');
-    document.body.appendChild(div);
-    const root = createRoot(div);
-    root.render(
-      <Modal {...props} danger={props.danger} />
-    );
+export default (() => {
+  const uniMessage = new Message();
+  return {
+    error: function (s: string) {
+      uniMessage.error(s);
+    },
+    msg: function (s: string) {
+      uniMessage.success(s);
+    },
+    warn: function (s: string) {
+      uniMessage.warning(s);
+    },
+    info: function (s: string) {
+      uniMessage.info(s);
+    },
+    confirm: function (props: ModalProps & { danger?: boolean }) {
+      // if (document.querySelector('.uni-shadow-mask-alert')) return false;
+      const div = document.createElement('div');
+      div.classList.add('uni-shadow-mask');
+      div.classList.add('mask');
+      div.classList.add('uni-shadow-mask-alert');
+      div.classList.add('show');
+      document.body.appendChild(div);
+      const root = createRoot(div);
+      root.render(
+        <Modal {...props} danger={props.danger} />
+      );
 
-  },
-  alert: function (props: ModalProps & { danger?: boolean }) {
-    // if (document.querySelector('.uni-shadow-mask-alert')) return false;
-    const div = document.createElement('div');
-    div.classList.add('uni-shadow-mask');
-    div.classList.add('mask');
-    div.classList.add('uni-shadow-mask-alert');
-    div.classList.add('show');
-    document.body.appendChild(div);
-    const root = createRoot(div);
-    root.render(
-      <Modal
-        {...props}
-        onlyConfirmBtn
-        danger={props.danger}
-      />
-    );
-  },
-  loading (msg = '加载中···') {
-    const loadingNode = document.querySelectorAll('.uni-loading');
-    if (loadingNode && loadingNode.length > 0) return false;
-    const container = document.createElement('div');
-    container.classList.add('uni-loading');
-    document.body.appendChild(container);
-    const root = createRoot(container);
-    root.render(<Spin spinning fullscreen tip={msg} />);
-  },
-  closeLoading () {
-    const loadingNode = document.querySelectorAll('.uni-loading');
-    loadingNode.forEach(i => {
-      document.body.removeChild(i);
-    });
-  }
-};
+    },
+    alert: function (props: ModalProps & { danger?: boolean }) {
+      // if (document.querySelector('.uni-shadow-mask-alert')) return false;
+      const div = document.createElement('div');
+      div.classList.add('uni-shadow-mask');
+      div.classList.add('mask');
+      div.classList.add('uni-shadow-mask-alert');
+      div.classList.add('show');
+      document.body.appendChild(div);
+      const root = createRoot(div);
+      root.render(
+        <Modal
+          {...props}
+          onlyConfirmBtn
+          danger={props.danger}
+        />
+      );
+    },
+    loading (msg = '加载中···') {
+      const loadingNode = document.querySelectorAll('.uni-loading');
+      if (loadingNode && loadingNode.length > 0) return false;
+      const container = document.createElement('div');
+      container.classList.add('uni-loading');
+      document.body.appendChild(container);
+      const root = createRoot(container);
+      root.render(<Spin spinning fullscreen tip={msg} />);
+    },
+    closeLoading () {
+      const loadingNode = document.querySelectorAll('.uni-loading');
+      loadingNode.forEach(i => {
+        document.body.removeChild(i);
+      });
+    }
+  };
+})();

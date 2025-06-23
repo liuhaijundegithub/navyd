@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDom from 'react-dom';
 import { ModalProps } from '../../types/ModalProps';
-import Button from '../button/Button';
 import { CommonHTMLAttributes } from '../../types/global';
+import { Button } from 'antd';
 
 
 const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = function (props) {
