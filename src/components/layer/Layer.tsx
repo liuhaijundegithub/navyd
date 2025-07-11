@@ -9,11 +9,15 @@ interface ModalProps {
   hideIcon?: boolean;
   confirmText?: string;
   cancelText?: string;
+  onlyConfirmBtn?: boolean;
+  danger?: boolean;
+  iconType?: 'warning' | 'success';
+  closable?: boolean;
   onConfirm?: () => void | Promise<void>;
   onCancel?: () => void | Promise<void>;
 }
 
-function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean }) {
+function Modal (props: ModalProps) {
   let {
     title,
     content,
@@ -23,7 +27,9 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean
     onConfirm,
     onCancel,
     onlyConfirmBtn, // 是不是提示框，如果只是提示框那么只需要一个按钮
-    danger
+    danger,
+    iconType = 'warning',
+    closable
   } = props;
 
   if (onlyConfirmBtn && !confirmText) {
@@ -78,13 +84,13 @@ function Modal (props: ModalProps & { onlyConfirmBtn?: boolean; danger?: boolean
     <div className="uni-modal-alert">
       <div className="uni-modal-alert-container">
         {
-          !hideIcon && <span className="iconfont icon icon-tips-alert" />
+          !hideIcon && <span className={`iconfont icon ${iconType === 'warning' ? 'icon-tips-alert' : 'icon-ic_success'}`} />
         }
         <div className="uni-alert-right">
           <div className="uni-alert-right-title">
             <span>{ title }</span>
             {
-              hideIcon && <span className="iconfont icon-nav_shut" onClick={cancel} />
+              closable && <span className="iconfont icon-nav_shut" onClick={cancel} />
             }
           </div>
           <div className="uni-alert-right-content">{ content }</div>
@@ -126,7 +132,7 @@ export default (() => {
     info: function (s: string) {
       uniMessage.info(s);
     },
-    confirm: function (props: ModalProps & { danger?: boolean }) {
+    confirm: function (props: ModalProps) {
       // if (document.querySelector('.uni-shadow-mask-alert')) return false;
       const div = document.createElement('div');
       div.classList.add('uni-shadow-mask');
@@ -140,7 +146,7 @@ export default (() => {
       );
 
     },
-    alert: function (props: ModalProps & { danger?: boolean }) {
+    alert: function (props: ModalProps) {
       // if (document.querySelector('.uni-shadow-mask-alert')) return false;
       const div = document.createElement('div');
       div.classList.add('uni-shadow-mask');

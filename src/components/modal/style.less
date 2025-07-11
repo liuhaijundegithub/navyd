@@ -1,7 +1,7 @@
 .uni-modal {
   position: fixed;
   z-index: 1000;
-  border-radius: @border-radius;
+  border-radius: @border-radius-lg;
   background: #fff;
   width: 320px;
   animation: fadeIn 0.2s ease-in-out;
@@ -46,7 +46,7 @@
 
 // 静态方法调用的modal样式
 .uni-modal-alert {
-  border-radius: @border-radius;
+  border-radius: @border-radius-lg;
   background: #fff;
   padding: 20px 24px;
   width: 414px;
@@ -61,7 +61,13 @@
     .icon {
       font-size: 22px;
       margin-right: 10px;
-      color: #faad14;
+      margin-top: 2px;
+      &.icon-tips-alert {
+        color: #faad14;
+      }
+      &.icon-ic_success {
+        color: #00aa5a;
+      }
     }
     .uni-alert-right {
       flex: 1;
@@ -74,7 +80,7 @@
         > span {
           // color: var(--font-color);
           font-size: 16px;
-          &[role] {
+          &.iconfont {
             cursor: pointer;
             color: #8C8C8C;
             font-size: 14px;

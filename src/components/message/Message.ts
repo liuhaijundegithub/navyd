@@ -17,7 +17,7 @@ interface MessageQueueItem {
 }
 
 const iconMap: Record<MessageType, string> = {
-  success: 'icon-success_fill',
+  success: 'icon-ic_success',
   warning: 'icon-icon-Fill',
   error: 'icon-cuowu',
   info: 'icon-icon-Fill'
