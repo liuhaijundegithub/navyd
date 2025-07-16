@@ -12,4 +12,5 @@ export interface ModalProps {
   noPadding?: boolean;
   mask?: boolean;
   footer?: React.ReactNode | null;
+  buttonAlign?: 'left' | 'center' | 'right';
 }

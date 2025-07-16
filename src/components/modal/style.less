@@ -35,8 +35,13 @@
     padding: 17px 24px;
     border-top: @border;
     display: flex;
-    justify-content: center;
     align-items: center;
+    &.center {
+      justify-content: center;
+    }
+    &.right {
+      justify-content: flex-end;
+    }
     button {
       margin-left: 20px;
     }

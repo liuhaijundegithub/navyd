@@ -1,11 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import ReactDom from 'react-dom';
 import { ModalProps } from '../../types/ModalProps';
 import { CommonHTMLAttributes } from '../../types/global';
 import { Button } from 'antd';
+import classNames from 'classnames';
+import { ConfigContext } from '../configProvider/ConfigProvider';
 
 
 const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = function (props) {
+  const contextValue = React.useContext(ConfigContext);
+
+  const model = useMemo(() => {
+    return Object.assign({ ...props }, contextValue.modal);
+  }, [...Object.values(props)]);
+
+
   const {
     title = '标题',
     open,
@@ -15,8 +24,9 @@ const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = functi
     confirmDisabled,
     noPadding,
     width = 400,
-    mask = true
-  } = props;
+    mask = true,
+    buttonAlign = 'center'
+  } = model;
 
   const modal = useRef<HTMLDivElement>(null);
   const shadow = useRef<HTMLDivElement>(null);
@@ -75,7 +85,7 @@ const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = functi
         {
           (() => {
             if (props.footer === null) return null;
-            else return <div className="uni-modal-footer">
+            else return <div className={classNames('uni-modal-footer', buttonAlign)}>
               {
                 props.footer ? props.footer : <>
                   <Button onClick={cancel}>{cancelText || '取消'}</Button>
