@@ -25,6 +25,7 @@ export default defineConfig({
     {
       dir: 'dist',
       format: 'es',
+      preserveModules: true,
       entryFileNames: '[name].js',
       chunkFileNames: 'chunks/[name]-[hash].js',
       assetFileNames: 'assets/[name][extname]',
