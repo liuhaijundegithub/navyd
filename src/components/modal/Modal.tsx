@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactDom from 'react-dom';
 import { ModalProps } from '../../types/ModalProps';
 import { CommonHTMLAttributes } from '../../types/global';
@@ -6,6 +6,7 @@ import { Button } from 'antd';
 import classNames from 'classnames';
 import { ConfigContext } from '../configProvider/ConfigProvider';
 
+const defaultZIndex = 900;
 
 const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = function (props) {
   const contextValue = React.useContext(ConfigContext);
@@ -31,6 +32,8 @@ const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = functi
   const modal = useRef<HTMLDivElement>(null);
   const shadow = useRef<HTMLDivElement>(null);
 
+  const [zIndex, setZIndex] = useState(defaultZIndex);
+
   useEffect(() => {
     const m = modal.current!;
     const s = shadow.current!;
@@ -38,6 +41,7 @@ const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = functi
       if (s.classList.contains('show')) {
         m.classList.add('uni-modal-hide');
         s.classList.add('hide');
+        setZIndex(defaultZIndex);
         m.onanimationend = function () {
           m.classList.remove('uni-modal-hide');
           m.classList.remove('uni-modal-show');
@@ -47,6 +51,10 @@ const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = functi
         };
       }
     } else {
+      const showEls = document.querySelectorAll('.uni-shadow-mask.show');
+      if (showEls && showEls.length) {
+        setZIndex(defaultZIndex + showEls.length * 50);
+      }
       s.classList.add('show');
       m.classList.add('uni-modal-show');
     }
@@ -60,10 +68,14 @@ const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = functi
   };
 
   const El = (
-    <div className={`uni-shadow-mask ${mask ? 'mask' : ''}`} ref={shadow}>
+    <div
+      className={`uni-shadow-mask ${mask ? 'mask' : ''}`}
+      ref={shadow}
+      style={{ zIndex }}
+    >
       <div
         className="uni-modal"
-        style={{ width: `${width}px` }}
+        style={{ width: `${width}px`}}
         ref={modal}
       >
         <div className="uni-modal-header">
