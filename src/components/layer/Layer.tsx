@@ -1,7 +1,9 @@
-import { message, Spin, Button } from 'antd';
+import { message, Spin, Button, ConfigProvider } from 'antd';
 import { createRoot } from 'react-dom/client';
 import React, { useEffect, useState } from 'react';
 import Message from '../message/Message';
+import { defaultZIndex } from '../modal/Modal';
+import config from '../../utils/config';
 
 interface ModalProps {
   title: React.ReactNode;
@@ -117,6 +119,12 @@ function Modal (props: ModalProps) {
   );
 }
 
+const getCurrentZIndex = () => {
+  const showEls = document.querySelectorAll('.uni-shadow-mask.show');
+  if (showEls.length === 0) return defaultZIndex;
+  else return defaultZIndex + showEls.length * 50;
+};
+
 export default (() => {
   const uniMessage = new Message();
   return {
@@ -134,15 +142,25 @@ export default (() => {
     },
     confirm: function (props: ModalProps) {
       // if (document.querySelector('.uni-shadow-mask-alert')) return false;
+      const zIndex = getCurrentZIndex();
       const div = document.createElement('div');
       div.classList.add('uni-shadow-mask');
       div.classList.add('mask');
       div.classList.add('uni-shadow-mask-alert');
       div.classList.add('show');
+      div.style.zIndex = zIndex.toString();
       document.body.appendChild(div);
       const root = createRoot(div);
       root.render(
-        <Modal {...props} danger={props.danger} />
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: config.mainColor
+            }
+          }}
+        >
+          <Modal {...props} danger={props.danger} />
+        </ConfigProvider>
       );
 
     },
@@ -153,14 +171,24 @@ export default (() => {
       div.classList.add('mask');
       div.classList.add('uni-shadow-mask-alert');
       div.classList.add('show');
+      const zIndex = getCurrentZIndex();
+      div.style.zIndex = zIndex.toString();
       document.body.appendChild(div);
       const root = createRoot(div);
       root.render(
-        <Modal
-          {...props}
-          onlyConfirmBtn
-          danger={props.danger}
-        />
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: config.mainColor
+            }
+          }}
+        >
+          <Modal
+            {...props}
+            onlyConfirmBtn
+            danger={props.danger}
+          />
+        </ConfigProvider>
       );
     },
     loading (msg = '加载中···') {

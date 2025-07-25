@@ -6,7 +6,7 @@ import { Button } from 'antd';
 import classNames from 'classnames';
 import { ConfigContext } from '../configProvider/ConfigProvider';
 
-const defaultZIndex = 900;
+export const defaultZIndex = 900;
 
 const Modal: React.FC<ModalProps & Omit<CommonHTMLAttributes, 'title'>> = function (props) {
   const contextValue = React.useContext(ConfigContext);
